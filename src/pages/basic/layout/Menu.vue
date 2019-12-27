@@ -12,8 +12,8 @@
     <div class="menu-content" :class="currMenuType === 'all' ? 'menu-content-all' : 'menu-content-common'" ref="menuContent">
       <el-scrollbar wrap-class="scrollbar-wrapper" :style="{'height': menuMaxHeight}">
         <ul class="menu-all">
-          <template v-if="!item.hidden">
-            <li v-for="(item, index) in leftMenu" :key="index" class="menu-item" :class="{'checked': item.checked,'hover':item.hover}" @click.stop="gotoUrl(item)" @mouseenter="showNavDetail(item, item.children)" @mouseleave="hideNavDetail" :id="item.name">
+          <template  v-for="(item, index) in leftMenu">
+            <li  v-if="!item.hidden" :key="index" class="menu-item" :class="{'checked': item.checked,'hover':item.hover}" @click.stop="gotoUrl(item)" @mouseenter="showNavDetail(item, item.children)" @mouseleave="hideNavDetail" :id="item.name">
               <div class="menu-item-tt" :title="item.label" v-if="item.children && item.children.length">
                 <yl-icon class="menu-icon" :icon="item.funcIcon"></yl-icon>
                 <span class="menu-item-tt-text" v-text="item.label"></span>
