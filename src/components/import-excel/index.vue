@@ -1,7 +1,7 @@
 <template>
   <section class="included">
     <!-- 导入 -->
-    <yl-dialog title="导入" :show.sync="shows" width="1000px" class="import-dialog" :close="false" :hideSubmitButton="true">
+    <yl-dialog :title="title" :show.sync="shows" width="1000px" class="import-dialog" :close="false" :hideSubmitButton="true">
       <div id="importbody">
         <div class="header">
           <yl-icon icon="icon-gantanhao" class="icon-gantanhao"></yl-icon>
@@ -9,9 +9,9 @@
           <el-button type="primary" icon="el-icon-download" size="mini" class="btn-down" @click="downFile('template')">下载模板</el-button>
         </div>
         <div class="session">
-          <el-form :inline="true" size="small">
+          <el-form :inline="true" size="small" class="mgb10">
             <el-form-item label="上传文件 ：" label-width="100px">
-              <excel-upload @upload="readFile" :loading.sync="loading" @init="initData"></excel-upload>
+              <yl-excel-upload @upload="readFile"  @init="initData"></yl-excel-upload>
             </el-form-item>
           </el-form>
           <p class="excel-tips" v-for="(item, index) in message" :key="index">{{item}}</p>
@@ -31,7 +31,6 @@
 
 <script>
 import { Tools } from 'ycloud-ui';
-import ExcelUpload from './src/ExcelUpload';
 
 export default {
     name: 'importExcel',
@@ -43,7 +42,7 @@ export default {
             },
             showTable: false,
             loading: false,
-            _downfile: '', //eslint-disable-line 
+            _downfile: '', //eslint-disable-line
             oldData: ''
         };
     },
@@ -58,6 +57,10 @@ export default {
             default () {
                 return ['1. 导入功能只针对新增信息，不覆盖已有信息；', '2. 标“*”的栏目是必填项，不能为空'];
             }
+        },
+        title: {
+            type: String,
+            default: '导入'
         },
         params: {
             type: Object,
@@ -98,10 +101,13 @@ export default {
         // 下载模板
         async downFile (type) {
             if (type === 'template' && !this._downfile) {
+                const paramType = this.getType(this.params.downParams);
                 let params = {};
-                if (this.getType(this.params.downParams) === 'Function') {
+                if (paramType === 'Function') {
                     params = this.params.downParams.call(this);
-                } 
+                } else if (paramType === 'Object') {
+                    params = this.params.downParams;
+                }
                 let _data = Object.assign({}, params);
                 await this.beforeDownFile(_data);
             }
@@ -151,10 +157,8 @@ export default {
                 this.$emit('update:show', newValue);
             }
         }
-    },
-    components: {
-        ExcelUpload
     }
+   
 };
 </script>
 

@@ -43,12 +43,10 @@
 
 <script>
 import { emitter } from 'ycloud-ui';
-
 import commonMix from '@/utils/mixins/commonMix';
-
 export default {
-    mixins: [commonMix, emitter],
     name: 'inputDropdown',
+    mixins: [commonMix, emitter],
     data () {
         return {
             isLoading: true,

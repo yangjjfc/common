@@ -1,42 +1,38 @@
 <!--
  * @Author: yangjj
  * @Date: 2019-08-01 19:51:26
- * @LastEditors: yangjj
- * @LastEditTime: 2019-08-12 15:58:56
+ * @LastEditors  : yangjj
+ * @LastEditTime : 2019-12-27 13:10:55
  * @Description: file content
  -->
 <template>
-    <section class="my-customer">
-        <div class="customer-title">
-            <el-autocomplete size="small" style="width: 100%"
-                 value-key="label" v-model="keywords"
-                 :fetch-suggestions="querySearch"
-                 :placeholder="placeholder"
-                 @select="handleSelect">
-            </el-autocomplete>
-        </div>
-        <div class="customer-body">
-            <div class="letter" v-if="letters.length">
-                <ul>
-                    <li v-for="(item, index) in letters" :key="index" @click="selectLetter(item)">
-                        {{item}}
-                    </li>
-                </ul>
-            </div>
-            <el-scrollbar class="views"  wrap-class="scrollbar-wrapper" ref="views">
-                <ul v-if="views.length">
-                    <li v-for="(item, index) in views" :key="index" >
-                        <p class="title" v-if="item.head" :ref="item.head">{{item.head}}</p>
-                        <p :class="{'active': active === item.value}" @click="selectItem(item)"  :ref="item.pinyin">
-                            <slot v-bind:item="item">
-                                {{item.label}}
-                            </slot>
-                        </p>
-                    </li>
-                </ul>
-            </el-scrollbar>
-        </div>
-    </section>
+  <section class="my-customer">
+    <div class="customer-title">
+      <el-autocomplete size="small" style="width: 100%" value-key="label" v-model="keywords" :fetch-suggestions="querySearch" :placeholder="placeholder" @select="handleSelect">
+      </el-autocomplete>
+    </div>
+    <div class="customer-body">
+      <div class="letter" v-if="letters.length">
+        <ul>
+          <li v-for="(item, index) in letters" :key="index" @click="selectLetter(item)">
+            {{item}}
+          </li>
+        </ul>
+      </div>
+      <el-scrollbar class="views" wrap-class="scrollbar-wrapper" ref="views" :style="{height: maxHeight}">
+        <ul v-if="views.length">
+          <li v-for="(item, index) in views" :key="index">
+            <p class="title" v-if="item.head" :ref="item.head">{{item.head}}</p>
+            <p :class="{'active': active === item.value}" @click="selectItem(item)" :ref="item.pinyin">
+              <slot v-bind:item="item">
+                {{item.label}}
+              </slot>
+            </p>
+          </li>
+        </ul>
+      </el-scrollbar>
+    </div>
+  </section>
 </template>
 <script>
 import Pinyin from '@/assets/utils/pinyin.js';
@@ -47,6 +43,7 @@ export default {
             letters: [],
             views: [], // 右侧视图
             search: {},
+            maxHeight: null,
             active: '',
             keywords: ''
         };
@@ -84,6 +81,10 @@ export default {
         value: {
             type: String,
             default: ''
+        },
+        limitH: {
+            type: Number,
+            default: 30
         }
     },
     methods: {
@@ -172,63 +173,71 @@ export default {
     },
     created () {
         this.init();
+    },
+    mounted () {
+        this.$nextTick(() => {
+            let $table = (this.$refs.views || {}).$el;
+            let clientTop = $table && $table.getBoundingClientRect().top;
+            this.maxHeight = window.innerHeight - clientTop - this.limitH;
+            this.maxHeight += 'px';
+        });
     }
 };
 
 </script>
 
 <style lang="scss" scoped>
-    .my-customer{
-        ::v-deep .el-autocomplete-suggestion li{
-            font-size: 12px;
-        }
-        .customer-title{
-            width: 100%;
-            margin-bottom: 10px;
-        }
-        .customer-body{
-            display: flex;
-            position: relative;
-            overflow: hidden;
-        }
-        .letter{
-            width: 20px;
-            border-top: 1px solid #ccc;
-            li{
-                height: 20px;
-                text-align: center;
-                cursor: pointer;
-                font-size: 14px;
-                border-bottom: 1px solid #ccc;
-                border-left: 1px solid #ccc;
-                &:hover{
-                    color: $theam;
-                }
-            }
-        }
-        .views{
-            background-color: #fff;
-            border: 1px solid #ccc;
-            height: calc(100vh - 200px);
-            flex-grow: 1;
-            ::v-deep .scrollbar-wrapper{
-                height: 105%;
-            }
-            ul {
-                padding-bottom: calc(100vh - 200px);
-                li p{
-                    padding: 4px 10px;
-                    cursor: pointer;
-                    line-height: 20px;
-                    //margin-bottom: 5px;
-                    &:hover{
-                        color: $theam;
-                    }
-                    &.active{
-                        background-color: #dcefff;
-                    }
-                }
-            }
-        }
+.my-customer {
+  ::v-deep .el-autocomplete-suggestion li {
+    font-size: 12px;
+  }
+  .customer-title {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .customer-body {
+    display: flex;
+    position: relative;
+    overflow: hidden;
+  }
+  .letter {
+    width: 20px;
+    border-top: 1px solid #ccc;
+    li {
+      height: 20px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 14px;
+      border-bottom: 1px solid #ccc;
+      border-left: 1px solid #ccc;
+      &:hover {
+        color: $theam;
+      }
     }
+  }
+  .views {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    //height: calc(100vh - 200px);
+    flex-grow: 1;
+    ::v-deep .scrollbar-wrapper {
+      height: 105%;
+    }
+    ul {
+      padding-bottom: calc(100vh - 200px);
+      li p {
+        padding: 4px 10px;
+        cursor: pointer;
+        line-height: 20px;
+        //margin-bottom: 5px;
+        &:hover {
+          color: $theam;
+        }
+        &.active {
+          background-color: #dcefff;
+        }
+      }
+    }
+  }
+}
 </style>

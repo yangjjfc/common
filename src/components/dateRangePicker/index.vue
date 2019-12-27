@@ -170,8 +170,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.startTime,
+<style scoped>
+    .startTime,
     .endTime {
         width: 125px;
         display: inline;

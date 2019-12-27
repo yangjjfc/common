@@ -98,12 +98,12 @@ export default {
     .step-container {
         padding: 20px;
 
-        ::v-deepdiv.el-step__head .el-step__icon {
+        ::v-deep div.el-step__head .el-step__icon {
             background-color: #c1c5cd;
             color: #fff;
             border-color: #c1c5cd;
         }
-        ::v-deepdiv.is-process .el-step__icon {
+        ::v-deep div.is-process .el-step__icon {
             background-color: #09977c;
             color: #fff;
             border-color: #09977c;
