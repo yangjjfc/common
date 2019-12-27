@@ -6,24 +6,24 @@
         <span :class="currMenuType === 'common' ? 'checked' : ''" @click="toggleNav('common')" v-text="!isOpean ? '常' : '常用'">常用</span>
       </div>-->
       <div class="switch left" @click="toggleMenu" :title="isOpean ? '收起' : '展开'">
-          <yl-icon icon="icon-daohang-shousuocaidan"></yl-icon> <span :style="{ paddingLeft: isOpean? '15px' : '0' }"> {{isOpean ? '收起菜单' : ''}}</span>
+        <yl-icon icon="icon-daohang-shousuocaidan"></yl-icon> <span :style="{ paddingLeft: isOpean? '15px' : '0' }"> {{isOpean ? '收起菜单' : ''}}</span>
       </div>
     </div>
     <div class="menu-content" :class="currMenuType === 'all' ? 'menu-content-all' : 'menu-content-common'" ref="menuContent">
       <el-scrollbar wrap-class="scrollbar-wrapper" :style="{'height': menuMaxHeight}">
         <ul class="menu-all">
           <template v-if="!item.hidden">
-               <li v-for="(item, index) in leftMenu" :key="index" class="menu-item" :class="{'checked': item.checked,'hover':item.hover}"  @click.stop="gotoUrl(item)" @mouseenter="showNavDetail(item, item.children)" @mouseleave="hideNavDetail" :id="item.name">
-            <div class="menu-item-tt" :title="item.label" v-if="item.children && item.children.length">
-              <yl-icon class="menu-icon" :icon="item.funcIcon"></yl-icon>
-              <span class="menu-item-tt-text" v-text="item.label"></span>
-              <b class="menu-icon-right"></b>
-            </div>
-            <router-link tag="div" class="menu-item-tt" v-else :to="item.path">
-              <yl-icon class="menu-icon" :icon="item.funcIcon"></yl-icon>
-              <span class="menu-item-tt-text" v-text="item.label"></span>
-            </router-link>
-          </li>
+            <li v-for="(item, index) in leftMenu" :key="index" class="menu-item" :class="{'checked': item.checked,'hover':item.hover}" @click.stop="gotoUrl(item)" @mouseenter="showNavDetail(item, item.children)" @mouseleave="hideNavDetail" :id="item.name">
+              <div class="menu-item-tt" :title="item.label" v-if="item.children && item.children.length">
+                <yl-icon class="menu-icon" :icon="item.funcIcon"></yl-icon>
+                <span class="menu-item-tt-text" v-text="item.label"></span>
+                <b class="menu-icon-right"></b>
+              </div>
+              <router-link tag="div" class="menu-item-tt" v-else :to="item.path">
+                <yl-icon class="menu-icon" :icon="item.funcIcon"></yl-icon>
+                <span class="menu-item-tt-text" v-text="item.label"></span>
+              </router-link>
+            </li>
           </template>
         </ul>
         <ul class="menu-common">
@@ -59,11 +59,11 @@
     </div>-->
 
     <!-- 导航菜单详情 -->
-    <div class="menu-nav-box" ref="menuNavBox" id="menuNavBox" v-show="navShow" @mouseenter="menuNavEnter"  @mouseleave="menuNavLeave">
+    <div class="menu-nav-box" ref="menuNavBox" id="menuNavBox" v-show="navShow" @mouseenter="menuNavEnter" @mouseleave="menuNavLeave">
       <dl v-for="(nav, navIndex) in navData" :key="navIndex">
-          <dd>
-              <el-button type="text" @click.stop="gotoUrl(nav)" v-text="nav.label"></el-button>
-          </dd>
+        <dd>
+          <el-button type="text" @click.stop="gotoUrl(nav)" v-text="nav.label"></el-button>
+        </dd>
         <!--<dt v-text="nav.label"></dt>
         <dd v-for="(list, listIndex) in nav.children" :key="listIndex" v-if="nav.children && nav.children.length && !list.hidden">
 
@@ -153,7 +153,7 @@ export default {
             this.currMenuType = type;
             /* if(type === 'common') {
 
-      } */
+} */
         },
         setHeight () {
             let dH = 0, // 计算后的高度
@@ -643,7 +643,7 @@ $txtColor: #95acc3;
     top: -999px;
     left: -999px;
     z-index: 999;
-    border:1px #d1dbe5 solid;
+    border: 1px #d1dbe5 solid;
     &::before {
       content: "";
       display: block;
