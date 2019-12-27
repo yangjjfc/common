@@ -1,0 +1,2 @@
+在这global下的组件会自动注册为全局组件,会自动读取文件夹下的index.vue文件;
+每个index.vue文件下必须有name;

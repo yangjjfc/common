@@ -1,0 +1,45 @@
+.header-mumber {
+    height: 60px;
+    background: linear-gradient(to right, #038b8d, #13a967);
+    color: #fff;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    @include flex(space-between);
+    .nav {
+        float: right;
+        overflow: hidden;
+        zoom: 1;
+        padding-top: 20px;
+        li {
+            float: left;
+            margin-left: 36px;
+            font-size: 16px;
+        }
+    }
+    .c-right {
+        font-size: 14px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        .userinfo-inner {
+            margin-right:20px;
+        }
+        .logout{
+            .svg{
+                cursor: pointer;
+                height: 25px;
+                width: 25px;
+                margin-right: 20px;
+            }
+        }
+    }
+    .login-logo {
+        float: left;
+        padding: 0 15px;
+        img {
+            height: 20px;
+            width: auto;
+        }
+    }
+}
