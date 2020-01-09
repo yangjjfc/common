@@ -27,7 +27,8 @@
         "single-spa-vue": "^1.5.4",
         "v-contextmenu": "^2.9.0",
         "vue-runtime-helpers": "^1.1.2",
-        "vuex-persistedstate": "^2.7.0"
+        "vuex-persistedstate": "^2.7.0",
+        "ycloud-ui": "^2.1.39"
     },
     "devDependencies": {
         "@commitlint/cli": "^8.2.0",

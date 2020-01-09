@@ -9,10 +9,11 @@ export default {
     menuList: state => state.user.menuList,
     buttons: state => state.user.buttons,
     collectList: state => state.user.collectList,
-    tempNavs: state => state.global.tempNavs,
-    activeNav: state => state.global.activeNav,
-    isOpean: state => state.global.sidebar.opened, // 菜单状态
-    leftMenu: state => state.global.leftMenu,
+    tempNavs: state => state.app.tempNavs,
+    activeNav: state => state.app.activeNav,
+    isOpean: state => state.app.sidebar.opened, // 菜单状态
+    leftMenu: state => state.app.leftMenu,
+    unreadCount: state => state.user.unreadCount, // 未读消息数
     auth: state => state.global.auth,
-    unreadCount: state => state.user.unreadCount // 未读消息数
+    componentName: state => state.global.componentName
 };

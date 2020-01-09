@@ -13,7 +13,6 @@ const user = {
         }, // 用户信息
         menuList: null, // 用户权限菜单
         routers: null, // 路由
-        buttons: null, // 按钮权限
         // 员工常用菜单
         collectList: [],
         unreadCount: 0 // 未读消息数
@@ -43,10 +42,6 @@ const user = {
         // 获取权限
         GETROLES (state, data) {
             state.menuList = data;
-        },
-        // 按钮权限
-        SETBUTTONS (state, data) {
-            state.buttons = data;
         },
         // 员工收藏
         SETCOLLECT: (state, data) => {
@@ -134,7 +129,7 @@ const user = {
                         let munuList = res.data.menuTree.filter(item => item.children && item.children.length);
                         commit('GETROLES', munuList);
                         // commit('SETCOLLECT', collects);
-                        commit('SETBUTTONS', res.data.permissionList);
+                        commit('setButtons', res.data.permissionList);
                         resolve(state.menuList);
                     } else {
                         reject('获取用户菜单失败');

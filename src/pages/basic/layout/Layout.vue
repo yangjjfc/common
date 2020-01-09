@@ -18,6 +18,11 @@
                 </div>
             </div>
         </div>
+        <section class="main-content" :id="id">
+            <keep-alive>
+                <components :is="componentName"></components>
+            </keep-alive>
+        </section>
     </div>
 </template>
 
@@ -33,6 +38,7 @@ export default {
     data () {
         return {
             pageTips: '',
+            // componentName: '',
             isPageTips: false
         };
     },
@@ -57,7 +63,8 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'isOpean'
+            'isOpean',
+            'componentName'
         ]),
         pageCode () {
             return this.$route.meta.componentUrl || this.$route.name;
